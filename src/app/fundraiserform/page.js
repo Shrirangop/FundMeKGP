@@ -1,18 +1,25 @@
 "use client";
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const FundraiserForm = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     goal: '',
-    image: '',
     requisitee: '',
     beneficiary: '',
     enddate: '',
     category: '',
   });
+
+  const [files,setfiles] = useState([]);
+
+  const handlefileChange = (e)=>{
+    setfiles(e.target.files);
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,19 +27,34 @@ const FundraiserForm = () => {
   };
 
   const handleSubmit = async (e) => {
+    // console.log(files);
     e.preventDefault();
+
+    const Data = new FormData();
+    Data.append('title', formData.title);
+    Data.append('description', formData.description);
+    Data.append('goal', formData.goal);
+    Data.append('requisitee', formData.requisitee);
+    Data.append('beneficiary', formData.beneficiary);
+    Data.append('enddate', formData.enddate);
+    Data.append('category', formData.category);
+
+    for (let i = 0; i < files.length; i++) {
+      Data.append('image', files[i]);
+    }
+
+    // console.log(Data);
+
 
     try {
       const response = await fetch('/api/fundraiser', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+        body:Data,
       });
 
       if (response.ok) {
         console.log('Fundraiser created successfully');
+        router.push('/');
         // Optionally reset form or redirect to another page
       } else {
         console.error('Failed to create fundraiser');
@@ -96,15 +118,16 @@ const FundraiserForm = () => {
 
         <div className="mb-4">
           <label className="block text-blue-700 font-bold mb-2" htmlFor="image">
-            Image URL
+            Image
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-blue-700 leading-tight focus:outline-none focus:shadow-outline"
             id="image"
-            type="text"
+            type="file"
             name="image"
+            multiple
             value={formData.image}
-            onChange={handleChange}
+            onChange={handlefileChange}
             required
           />
         </div>

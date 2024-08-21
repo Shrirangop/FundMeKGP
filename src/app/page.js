@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Card from "./card";
-import Navbar from "./Navbar"
-import Footer from "./Footer"
+// import Navbar from "./Navbar"
+// import Footer from "./Footer"
 import Fundraisercard from "./Fundraisercard";
 import TextField from '@mui/material/TextField';
 import { CiSearch } from "react-icons/ci";
@@ -11,13 +11,14 @@ import { PiDotsThreeOutline } from "react-icons/pi";
 import { BiSolidDonateHeart } from "react-icons/bi";
 
 
+
 // import Trial from "../../public/trial.jpg"
 
 
 export default function Home() {
   return (
     <>
-      <Navbar></Navbar>
+      {/* <Navbar></Navbar> */}
       <Image
       src="/trial.jpg"
       width={500}
@@ -62,7 +63,7 @@ export default function Home() {
     
      
 
-      <Footer></Footer>
+      {/* <Footer></Footer> */}
     </>
   );
 }

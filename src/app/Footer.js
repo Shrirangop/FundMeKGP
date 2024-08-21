@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Footer = ()=>{
     return(
         <div className="footer mt-4 shadow-lg flex justify-center items-center">
@@ -29,7 +31,7 @@ const Footer = ()=>{
             </div>
 
             <div className="fund w-1/4">
-                <div className="supported">
+                <div className="supported mb-2">
                     <h1 className="mb-2 text-left">Supported By</h1>
                     <div className="flex justify-left items-center">
                     <img src="https://img.icons8.com/color/48/000000/visa.png" alt="visa" className="w-8 h-8"/>
@@ -38,8 +40,9 @@ const Footer = ()=>{
                     <img src="https://img.icons8.com/color/48/000000/paytm.png" alt="paytm" className="w-8 h-8"/>
                     </div>
 
-                    <button className="bg-blue-700 text-white px-4 py-2 rounded-xl hover:bg-blue-900 mt-4 mb-2">Start a Fundraiser</button>
+                    
                 </div>
+                <Link className="bg-blue-700 text-white px-4 py-2 rounded-xl hover:bg-blue-900 mt-8 mb-2" href = "/fundraiserform">Start a Fundraiser</Link>
             </div>
 
             <div className="share">

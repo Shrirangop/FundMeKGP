@@ -1,16 +1,19 @@
 import user from "../models/UserModel";
+import bcrypt from "bcrypt";
 
 export async function createUserController(req){
     const {name, email, password, role, phonenumber} = req;
+
+    const hashedpassword = await bcrypt.hash(password,10);
     const newUser = new user({
         name,
         email,
-        password,
+        password : hashedpassword,
         role,
         phonenumber,
     });
 
-    console.log(name);
+    // console.log(name);
 
     try{
     

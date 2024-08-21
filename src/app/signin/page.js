@@ -1,11 +1,18 @@
 "use client"
 import { useState } from "react";
+import Link from "next/link";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [error, setError] = useState("");
+  const router = useRouter();
+  let isValid = true;
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -21,24 +28,23 @@ const SignIn = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('/api/user/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+      const response = await signIn("credentials", {
+        redirect: false,
+        email: formData.email,
+        password: formData.password,
       });
 
-      if (response.ok) {
-        console.log('User logged in');
-        // Optionally reset form or redirect to another page
-      } else {
-        console.error('Failed to login');
-        alert("user invalid")
+      if (response.error) {
+        setError("Invalid Credentials");
+        return;
       }
+
+      router.replace("/");
     } catch (error) {
       console.error('An error occurred:', error);
     }
+
+    
   };
   return (
     <div className="w-full h-screen flex justify-center items-center text-center">
@@ -73,6 +79,13 @@ const SignIn = () => {
         <button className="mt-2 text-white py-2 border-2 border-blue-700 px-3 rounded-3xl bg-blue-700 transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-105  duration-300 active:bg-orange-700">
           Login
         </button>
+
+        {error && (
+            <div className="bg-red-500 text-white w-fit text-sm py-1 px-3 rounded-md mt-2">
+              {error}
+            </div>
+          )}
+
         <p className="text-[10px] text-left px-3 my-1">
           By clicking on Login, I accept the{" "}
           <span className="font-semibold">Terms & Conditions</span> &{" "}
@@ -80,9 +93,9 @@ const SignIn = () => {
         </p>
         <p className="mt-5 text-sm">
           Don't have an account?{" "}
-          <a className="underline font-semibold hover:text-blue-700 active:text-blue-900" >
+          <Link className="underline font-semibold hover:text-blue-700 active:text-blue-900"  href = {"/signup"}>
             Sign Up
-          </a>
+          </Link>
         </p>
         <div className="text-center"></div>
       </form>

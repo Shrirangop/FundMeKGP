@@ -14,7 +14,7 @@ const fundraiseScema  = new mongoose.Schema({
         required: [true, "Please provide a goal"],
     },
     image: {
-        type: String,
+        type: Array,
         required: [true, "Please provide a image"],
     },
     requisitee: {

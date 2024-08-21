@@ -1,5 +1,18 @@
+"use client"
+import { useSession } from "next-auth/react";
+import { MdOutlineAccountCircle } from "react-icons/md";
+import Link from "next/link";
 
 const Navbar = () => {
+  const { data: session } = useSession();
+
+  const signin = <button className="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-900">
+  Sign in
+</button>;
+
+  const account = <MdOutlineAccountCircle color = {"blue"} size = {35}  className = "cursor-pointer"/>
+
+  console.log(session);
   return (
     <nav className="bg-white flex justify-between items-center px-4 py-2 shadow-lg">
       <div className="logo w-1/10">
@@ -14,10 +27,8 @@ const Navbar = () => {
         </li>
       </ul>
       <div className="flex space-x-4 w-2/5 justify-end items-center">
-        <button className="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-900">Start a Fundraiser</button>
-        <button className="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-900">
-            Sign in
-        </button>
+        <Link className="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-900" href="/fundraiserform">Start a Fundraiser</Link>
+        {session?account:signin}
       </div>
     </nav>
   );
