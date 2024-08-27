@@ -3,14 +3,19 @@ import { getFundraiserController,createFundraiserController } from "@/app/contro
 import { NextResponse } from "next/server";
 import dbConnect from "@/app/lib/db";
 
-import multer from 'multer';
-import fs from 'fs';
-import path from 'path';
 
-export async function GET(){
+export async function GET(req){
     // Connect to the database
     await dbConnect();
-    const fundraisers = await getFundraiserController();
+
+    
+    const { searchParams } = new URL(req.url);
+
+    const paramValue = searchParams.get('id');
+
+    console.log(paramValue);
+
+    const fundraisers = await getFundraiserController(paramValue);
 
     return NextResponse.json(fundraisers);
 }

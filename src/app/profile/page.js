@@ -1,19 +1,30 @@
 "use client"
 // import React from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { signOut } from "next-auth/react"
 
 const ProfilePage = () => {
-//   const router = useRouter();
+  const router = useRouter();
 
-//   const handleLogout = () => {
-//     // Add your logout logic here, e.g., clearing tokens, redirecting
-//     router.push('/login');
-//   };
-
-  const accountInfo = {
-    name: 'John Doe',
-    email: 'john.doe@example.com',
+  const handleLogout = () => {
+    signOut();
+    // Redirect to the home page
+    router.push('/');
   };
+
+const { data: session } = useSession();
+
+
+let accountInfo;
+
+if(session){
+  accountInfo = {
+    name: session.user.name,
+    email: session.user.email,
+  };
+}
+ 
 
   const totalContribution = 5000; // Example amount
   const currentFundraisers = [
@@ -31,7 +42,7 @@ const ProfilePage = () => {
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">Your Profile</h1>
           <button
-            // onClick={handleLogout}
+            onClick={handleLogout}
             className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
           >
             Logout

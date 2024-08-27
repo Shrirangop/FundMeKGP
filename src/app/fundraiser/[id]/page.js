@@ -1,5 +1,8 @@
-import Navbar from "../Navbar";
-import Footer from "../Footer";
+"use client"
+
+import { useSession } from "next-auth/react";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { CiShare2 } from "react-icons/ci";
 import { FaHeart } from "react-icons/fa";
@@ -7,16 +10,56 @@ import LinearProgress from '@mui/material/LinearProgress';
 
 import Typography from '@mui/material/Typography';
 import { FaRupeeSign } from "react-icons/fa";
-import Contributor from "../Contributor";
+import Contributor from "../../Contributor";
+import axios from "axios"
 
 
 const Fundraiser = ()=>{
+    const { data: session } = useSession();
+    const { id } = useParams();
+    const [fundraiser, setFundraiser] = useState({});
+    const [loading, setLoading] = useState(true);
+    // const [contributions, setContributions] = useState([]);
+    // const [totalContributions, setTotalContributions] = useState(0);
+    // const [goal, setGoal] = useState(0);
+    // const [progress, setProgress] = useState(0);
+    // const [showContributors, setShowContributors] = useState(false);
+    // const [showShare, setShowShare] = useState(false);
+
+    const getfundraiser = async()=>{
+
+        console.log(id);
+        try{
+        const response = await axios.get("http://localhost:3000/api/fundraiser",{
+            params:{
+                id:id
+            }
+        })
+        // setFundraiser(response.data);
+        // setFundraiser(val.json);
+        // setLoading(false);
+
+        console.log(response);
+        setFundraiser(response.data.json);
+
+        }catch(error){
+        console.log(error);
+        }
+    }
+
+    useEffect(()=>{
+        getfundraiser();
+    }
+    ,[])
+
+    
     return (
         <>
-        <Navbar></Navbar>
+        {/* <Navbar></Navbar> */}
         <div className = "w-full h-auto flex justify-center items-center">
         <div className = "w-4/5 h-auto flex flex-col justify-center items-center mt-2">
             <h1 className = "font-bold text-5xl text-center mt-2">Help 12 year old patient suffering from cancer</h1>
+             {/* {fundraiser.title} */}
 
             <div className = "w-full h-auto flex justify-center items-center mt-8">
                 <div className = "w-3/5 h-auto ">
@@ -33,6 +76,7 @@ const Fundraiser = ()=>{
                     <div>
                         <h2 className = "text-xl mt-4">Description</h2>
                         <p className = "mt-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio sapiente assumenda illum perspiciatis soluta, labore esse ratione libero possimus eligendi aut consectetur qui perferendis necessitatibus accusamus enim commodi doloremque ullam quaerat. Dolor?</p>
+                        {/* {fundraiser.description} */}
                     </div>
                     
                 </div>
@@ -68,7 +112,7 @@ const Fundraiser = ()=>{
             </div>
         </div>
         </div>
-        <Footer></Footer>
+        {/* <Footer></Footer> */}
         </>
     )    
 }

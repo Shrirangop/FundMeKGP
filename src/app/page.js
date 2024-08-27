@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image";
 import Card from "./card";
 // import Navbar from "./Navbar"
@@ -9,6 +11,8 @@ import { LuStethoscope } from "react-icons/lu";
 import { TbCandle } from "react-icons/tb";
 import { PiDotsThreeOutline } from "react-icons/pi";
 import { BiSolidDonateHeart } from "react-icons/bi";
+import {useState, useEffect} from "react";
+
 
 
 
@@ -16,11 +20,36 @@ import { BiSolidDonateHeart } from "react-icons/bi";
 
 
 export default function Home() {
+
+  const [data,setdata] = useState([]);
+
+  const getfundraisers = async()=>{
+    try{
+    const response = await fetch("http://localhost:3000/api/fundraiser");
+    const val = await response.json();
+    console.log(val);
+    setdata(val.json);
+    }catch(error){
+      console.log(error);
+    }
+
+    
+  }
+
+
+  useEffect(()=>{
+    getfundraisers();
+  }
+  ,[])
+
+  // const currdata = data.slice(0,6);
+
+
   return (
     <>
-      {/* <Navbar></Navbar> */}
+    
       <Image
-      src="/trial.jpg"
+      src="/webcover.png"
       width={500}
       height={500}
       alt="Webcover"
@@ -52,10 +81,15 @@ export default function Home() {
       <h2 className = "text-blue-500 mt-2">Technical Societies</h2>
       </div>
     </div>
-    <div className = "grid grid-flow-row grid-cols-3 w-4/5 mt-8 mb-8">
+    <div className = "grid grid-flow-row grid-cols-3 w-4/5 mt-8 mb-8 gap-5">
+    {/* <div className = "flex justify-center items-center"><Fundraisercard/></div>
     <div className = "flex justify-center items-center"><Fundraisercard/></div>
-    <div className = "flex justify-center items-center"><Fundraisercard/></div>
-    <div className = "flex justify-center items-center"><Fundraisercard/></div>
+    <div className = "flex justify-center items-center"><Fundraisercard/></div> */}
+    {data.map((fundraiser,index)=>{
+      return(
+        <div className = "flex justify-center items-center"><Fundraisercard  key = {index} fundraiser = {fundraiser}/></div>
+      )
+    })}
     </div>
     </div>
 
@@ -63,7 +97,7 @@ export default function Home() {
     
      
 
-      {/* <Footer></Footer> */}
+
     </>
   );
 }

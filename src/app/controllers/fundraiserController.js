@@ -91,9 +91,13 @@ export async function createFundraiserController(req){
     }
 }
 
-export async function getFundraiserController(){
+export async function getFundraiserController(query){
     try{
-        const fundraisers = await Fundraisermodel.find();
+        let fundraisers;
+        console.log(query);
+        if(query) fundraisers = await Fundraisermodel.findById(query);
+
+        else fundraisers = await Fundraisermodel.find();
         return {
             status: 200,
             json: fundraisers,
