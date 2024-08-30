@@ -16,7 +16,10 @@ const ProfilePage = () => {
 const { data: session } = useSession();
 
 
-let accountInfo;
+let accountInfo = {
+  name: '',
+  email: '',
+};
 
 if(session){
   accountInfo = {
@@ -37,6 +40,7 @@ if(session){
   ];
 
   return (
+
     <div className="bg-blue-700 min-h-screen text-white p-8">
       <div className="max-w-4xl mx-auto bg-white text-blue-700 rounded-lg shadow-md p-8">
         <div className="flex justify-between items-center mb-6">
