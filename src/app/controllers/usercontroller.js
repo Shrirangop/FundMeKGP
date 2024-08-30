@@ -19,6 +19,7 @@ export async function createUserController(req){
     
     await newUser.save()
     
+    
         console.log("User created");
         return {
             status: 200,

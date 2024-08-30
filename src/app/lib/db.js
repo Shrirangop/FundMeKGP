@@ -4,6 +4,8 @@ import mongoose from 'mongoose';
 
 let cached = global.mongoose;
 
+// console.log(cached);
+
 if (!cached) {
   cached = global.mongoose = { conn: null, promise: null };
 }
@@ -19,6 +21,7 @@ async function dbConnect() {
     };
 
     cached.promise = mongoose.connect(process.env.MONGODB_URI, opts).then((mongoose) => {
+      console.log('Connected to MongoDB');
       return mongoose;
     });
   }

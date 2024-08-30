@@ -25,7 +25,7 @@ export default function Home() {
 
   const getfundraisers = async()=>{
     try{
-    const response = await fetch("http://localhost:3000/api/fundraiser");
+    const response = await fetch("/api/fundraiser");
     const val = await response.json();
     console.log(val);
     setdata(val.json);
