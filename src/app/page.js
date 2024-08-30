@@ -83,7 +83,7 @@ export default function Home() {
     <div className = "flex justify-center items-center"><Fundraisercard/></div> */}
     {data.map((fundraiser,index)=>{
       return(
-        <div className = "flex justify-center items-center"><Fundraisercard  key = {index} fundraiser = {fundraiser}/></div>
+        <div className = "flex justify-center items-center" key = {index}><Fundraisercard  key = {index} fundraiser = {fundraiser}/></div>
       )
     })}
     </div>
