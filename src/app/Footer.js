@@ -1,55 +1,79 @@
 import Link from "next/link";
 
-const Footer = ()=>{
-    return(
-        <div className="footer mt-4 shadow-lg flex justify-center items-center">
-            <div className="navs w-1/4 h-1/5">
-                <h1 className="mb-2 text-center">FundMeKGP</h1>
-                <ul className = "flex flex-col justify-center items-center">
-                    <li className = "text-blue-700">Home</li>
-                    <li className = "text-blue-700">Schemes</li>
-                    <li className = "text-blue-700">About Us</li>
-                    <li className = "text-blue-700">Donate</li>
-                </ul>
-            </div>
+const Footer = () => {
+    return (
+        <footer className="footer bg-gray-100 py-8 mt-8 shadow-lg">
+            <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="navs text-center md:text-left">
+                    <h1 className="text-2xl font-bold mb-4 text-blue-700">FundMeKGP</h1>
+                    <ul className="space-y-2">
+                        <li>
+                            
+                                <Link className="text-gray-600 hover:text-blue-700" href = "/">Home</Link>
+                            
+                        </li>
+                        {/* <li>
+                            <Link href="/schemes">
+                                <a className="text-gray-600 hover:text-blue-700">Schemes</a>
+                            </Link>
+                        </li> */}
+                        <li>
+                   
+                                <Link className="text-gray-600 hover:text-blue-700" href = "/aboutus">About Us</Link>
+                    
+                        </li>
+                        <li>
 
-            <div className="add w-1/4">
-                <div className="addr">
-                    <h1 className="mb-2 text-left">Address</h1>
-                    <p className="text-left">IIT Kharagpur, West Bengal, India</p>
+                                <Link className="text-gray-600 hover:text-blue-700" href = "/donate">Donate</Link>
+                
+                        </li>
+                    </ul>
                 </div>
 
-                <div className="logos mt-2">
-                    <h1 className="mb-2 text-left">Follow Us</h1>
-                    <div className="flex justify-left items-center mb-2">
-                        <img src="https://img.icons8.com/color/48/000000/facebook.png" alt="facebook" className="w-8 h-8"/>
-                        <img src="https://img.icons8.com/color/48/000000/twitter.png" alt="twitter" className="w-8 h-8"/>
-                        <img src="https://img.icons8.com/color/48/000000/instagram-new.png" alt="instagram" className="w-8 h-8"/>
-                        <img src="https://img.icons8.com/color/48/000000/linkedin.png" alt="linkedin" className="w-8 h-8"/>
+                <div className="address text-center flex justify-between items-center flex-col md:text-left">
+                    <h1 className="text-2xl font-bold mb-4 text-blue-700">Address</h1>
+                    <p className="text-gray-600">
+                        IIT Kharagpur, West Bengal, India
+                    </p>
+                    <div className="social-links mt-6">
+                        <h1 className="text-lg font-semibold mb-4 text-blue-700">Follow Us</h1>
+                        <div className="flex justify-center md:justify-start space-x-4">
+                            <a href="#" className="hover:opacity-75">
+                                <img src="https://img.icons8.com/color/48/000000/facebook.png" alt="Facebook" />
+                            </a>
+                            <a href="#" className="hover:opacity-75">
+                                <img src="https://img.icons8.com/color/48/000000/twitter.png" alt="Twitter" />
+                            </a>
+                            <a href="#" className="hover:opacity-75">
+                                <img src="https://img.icons8.com/color/48/000000/instagram-new.png" alt="Instagram" />
+                            </a>
+                            <a href="#" className="hover:opacity-75">
+                                <img src="https://img.icons8.com/color/48/000000/linkedin.png" alt="LinkedIn" />
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div className="fund w-1/4">
-                <div className="supported mb-2">
-                    <h1 className="mb-2 text-left">Supported By</h1>
-                    <div className="flex justify-left items-center">
-                    <img src="https://img.icons8.com/color/48/000000/visa.png" alt="visa" className="w-8 h-8"/>
-                    <img src="https://img.icons8.com/color/48/000000/mastercard.png" alt="mastercard" className="w-8 h-8"/>
-                    <img src="https://img.icons8.com/color/48/000000/amex.png" alt="amex" className="w-8 h-8"/>
-                    <img src="https://img.icons8.com/color/48/000000/paytm.png" alt="paytm" className="w-8 h-8"/>
+                <div className="fund text-center flex justify-between items-center flex-col md:text-left">
+                    <h1 className="text-2xl font-bold mb-4 text-blue-700">Supported By</h1>
+                    <div className="flex justify-center md:justify-start space-x-4 mb-4">
+                        <img src="https://img.icons8.com/color/48/000000/visa.png" alt="Visa" />
+                        <img src="https://img.icons8.com/color/48/000000/mastercard.png" alt="Mastercard" />
+                        <img src="https://img.icons8.com/color/48/000000/amex.png" alt="Amex" />
+                        <img src="https://img.icons8.com/color/48/000000/paytm.png" alt="Paytm" />
                     </div>
-
+    
+                        <Link className="inline-block bg-blue-700 text-white px-6 py-2 rounded-full hover:bg-blue-900 transition-colors" href = "/fundraiserform">
+                            Start a Fundraiser
+                        </Link>
                     
                 </div>
-                <Link className="bg-blue-700 text-white px-4 py-2 rounded-xl hover:bg-blue-900 mt-8 mb-2" href = "/fundraiserform">Start a Fundraiser</Link>
             </div>
-
-            <div className="share">
-
+            <div className="text-center mt-8 text-gray-500">
+                &copy; {new Date().getFullYear()} FundMeKGP. All rights reserved.
             </div>
-        </div>
-    )
+        </footer>
+    );
 }
 
 export default Footer;

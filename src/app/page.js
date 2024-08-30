@@ -76,10 +76,6 @@ export default function Home() {
       <h2 className = "text-blue-500 mt-2">Social Cause</h2>
       </div>  
       
-      <div className="card rounded-md shadow-md shadow-blue-300 w-1/5 h-auto flex flex-col justify-center items-center p-2 m-2">
-      <PiDotsThreeOutline size = {60} color = {"blue"}/>
-      <h2 className = "text-blue-500 mt-2">Technical Societies</h2>
-      </div>
     </div>
     <div className = "grid grid-flow-row grid-cols-3 w-4/5 mt-8 mb-8 gap-5">
     {/* <div className = "flex justify-center items-center"><Fundraisercard/></div>
