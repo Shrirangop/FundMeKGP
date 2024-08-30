@@ -92,7 +92,7 @@ const SignIn = () => {
           <span className="font-semibold">Privacy Policy</span>
         </p>
         <p className="mt-5 text-sm">
-          Don't have an account?{" "}
+          Do not have an account?{" "}
           <Link className="underline font-semibold hover:text-blue-700 active:text-blue-900"  href = {"/signup"}>
             Sign Up
           </Link>
