@@ -181,7 +181,7 @@ const FundraiserForm = () => {
           <label className="block text-blue-700 font-bold mb-2" htmlFor="category">
             Category
           </label>
-          <input
+          <select
             className="shadow appearance-none border rounded w-full py-2 px-3 text-blue-700 leading-tight focus:outline-none focus:shadow-outline"
             id="category"
             type="text"
@@ -189,7 +189,12 @@ const FundraiserForm = () => {
             value={formData.category}
             onChange={handleChange}
             required
-          />
+          >
+              <option value="">Select a category</option>
+              <option value="Medical">Medical</option>
+              <option value="Calamity">Calamity</option>
+              <option value="Social Cause">Social Cause</option>
+          </select>
         </div>
 
         <div className="flex items-center justify-between">

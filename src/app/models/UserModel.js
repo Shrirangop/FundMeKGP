@@ -16,13 +16,44 @@ const UserSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ["user", "alumni"],
-        default: "user",
+        enum: ["student", "alumni"],
+        default: "student",
+        required:true
     },
     phonenumber:{
         type: Number,
         required: [true, "Please provide a phonenumber"],
+    },
+    Department : {
+        type : String,
+        required : false,
+        default : ""
+    },
+    Hall : {
+        type : String,
+        required : false,
+        default: ""
+    },
+
+    Place :{
+        type : String,
+        required : false,
+        default : ""
+    },
+
+    profilepic : {
+        type : String,
+        required : false,
+        default : ""
+    },
+    id : {
+        type : String,
+        required : false,
+        default : ""
     }
+
+    
+
     
 });
 

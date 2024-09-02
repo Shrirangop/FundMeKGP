@@ -11,10 +11,30 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Typography from '@mui/material/Typography';
 import { FaRupeeSign } from "react-icons/fa";
 import Contributor from "../../Contributor";
-import axios from "axios"
+import axios from "axios";
+import {
+    FacebookShareButton,
+    FacebookIcon,
+  } from 'next-share'
 
+import {
+    WhatsappShareButton,
+    WhatsappIcon,
+  } from 'next-share'
+  
+import { usePathname } from 'next/navigation'
+import {
+    LinkedinShareButton,
+    LinkedinIcon,
+  } from 'next-share'
 
 const Fundraiser = ()=>{
+    
+
+    const currentURL = usePathname();
+
+    const url = window.location.origin + currentURL;
+  
     const { data: session } = useSession();
     const { id } = useParams();
     const [fundraiser, setFundraiser] = useState({});
@@ -30,7 +50,7 @@ const Fundraiser = ()=>{
 
         console.log(id);
         try{
-        const response = await axios.get("http://localhost:3000/api/fundraiser",{
+        const response = await axios.get("/api/fundraiser",{
             params:{
                 id:id
             }
@@ -82,10 +102,44 @@ const Fundraiser = ()=>{
                 </div>
 
                 <div className = "w-2/5 h-auto flex flex-col justify-between place-items-center">
-                <button className="flex items-center px-4 py-2 border-2 border-blue-500 text-blue-500 rounded-lg hover:bg-blue-500 hover:text-white transition-colors duration-300 mb-4">
+                {/* <button className="flex items-center px-4 py-2 border-2 border-blue-500 text-blue-500 rounded-lg hover:bg-blue-500 hover:text-white transition-colors duration-300 mb-4">
                 <CiShare2 className = "mr-2" size = {25}/>
                     Share the Fundraiser
-                </button>
+                </button> */}
+
+                <FacebookShareButton
+  url={url}
+  quote={'next-share is a social share buttons for your next React apps.'}
+  hashtag={'#nextshare'}
+
+    
+>
+    <div className="flex items-center px-4 py-2 border-2 border-blue-900 text-blue-900 rounded-lg hover:bg-blue-900 hover:text-white transition-colors duration-300 mb-4">
+    <FacebookIcon size={32} round className="mr-2"/>
+    Share to facebook
+    </div>
+
+</FacebookShareButton>
+
+<WhatsappShareButton
+  url={url}
+  title={'next-share is a social share buttons for your next React apps.'}
+  separator=":: "
+>
+    <div  className="flex items-center px-4 py-2 border-2 border-green-400 text-green-400 rounded-lg hover:bg-green-400 hover:text-white transition-colors duration-300 mb-4">
+    <WhatsappIcon size={32} round  className="mr-2"/>
+    Share to Whatsapp
+    </div>
+
+</WhatsappShareButton>
+
+<LinkedinShareButton url={url}>
+            <div className="flex items-center px-4 py-2 border-2 border-blue-800 text-blue-800 rounded-lg hover:bg-blue-800 hover:text-white transition-colors duration-300 mb-4">
+                    <LinkedinIcon size={32} round className = "mr-2"/>
+                    Share to Linkedin
+        </div>
+
+</LinkedinShareButton>
 
                 <button className="flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-300 mb-4">
                 <FaHeart className  = "mr-2"/>

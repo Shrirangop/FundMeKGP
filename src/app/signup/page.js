@@ -7,7 +7,7 @@ const Signup = () => {
     email: "",
     phonenumber: "",
     password: "",
-    role: "user",
+    role: "",
   });
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -91,7 +91,7 @@ const Signup = () => {
           onChange={handleInputChange}
         />
         <input
-          type="text"
+          type="password"
           name="password"
           value={formData.password}
           placeholder="Password"
@@ -107,7 +107,9 @@ const Signup = () => {
           className="w-full border-2 mx-auto rounded-3xl py-3 px-4 my-2 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent"
           onChange={handleInputChange}
         >
-          <option value="user">User</option>
+              <option value="">Select a category</option>
+
+          <option value="student">Student</option>
           <option value="alumni">Alumni</option>
         </select>
         <button className="mt-2 text-white py-2 border-2 border-blue-700 px-3 rounded-3xl bg-blue-700 transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-105  duration-300  active:bg-orange-700">

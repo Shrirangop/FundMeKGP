@@ -1,24 +1,28 @@
 import Fundraisermodel from "../models/Fundraisermodel";
-import path from "path";
-import { writeFile } from "fs/promises";
+import { uploadToCloudinary } from "../lib/uploadtocloud";
 
-const uploadfilemiddleware = async (images)=>{
+const uploadfilemiddleware = async (images,folder)=>{
     const image = [];
+
         for(let i = 0;i<images.length;i++){
+            try{
         const filename = `${Date.now()}-${Math.round(Math.random() * 1e9)}-${images[i].name}`;
-        const filepath = path.join(process.cwd(),'/public/uploads',filename);
+
         const buffer = Buffer.from(await images[i].arrayBuffer())
-        await writeFile(filepath, buffer)
-        .then(()=>{
-            console.log("Image uploaded successfully");
-            // console.log(typeof(filepath));
-            
-        image.push(filepath);
 
-        }).catch((err)=>{
-            console.log(err);
-        })
+        const mimeType = images[i].type;
+        const encoding = "base64";
+        const base64Data = buffer.toString(encoding);
 
+        const fileUri = `data:${mimeType};${encoding},${base64Data}`;
+
+        const res = await uploadToCloudinary(fileUri, filename, folder);
+
+                image.push(res.result.secure_url);
+
+            }catch(err){
+                console.log(err);
+            }
     }
 
     // console.log(image);
@@ -44,7 +48,7 @@ export async function createFundraiserController(req){
     // console.log(images);
 
 
-    const image = await uploadfilemiddleware(images)
+    const image = await uploadfilemiddleware(images,"fundraisers");
    
 
     // console.log(image);
@@ -110,3 +114,4 @@ export async function getFundraiserController(query){
         }
     }
 }
+
