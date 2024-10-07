@@ -13,22 +13,35 @@ const FundraiserForm = () => {
     beneficiary: '',
     enddate: '',
     category: '',
+    accountNumber: 0,
+    ifscCode: '',
+    upiId: '',
   });
 
-  const [files,setfiles] = useState([]);
+  const [files, setFiles] = useState([]);
+  const [agreeToShare, setAgreeToShare] = useState(false); // State to track checkbox
 
-  const handlefileChange = (e)=>{
-    setfiles(e.target.files);
-  }
+  const handleFileChange = (e) => {
+    setFiles(e.target.files);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleCheckboxChange = (e) => {
+    setAgreeToShare(e.target.checked); // Update checkbox state
+  };
+
   const handleSubmit = async (e) => {
-    // console.log(files);
     e.preventDefault();
+
+    // Prevent form submission if checkbox is not checked
+    if (!agreeToShare) {
+      alert("Please agree to share your bank account details.");
+      return;
+    }
 
     const Data = new FormData();
     Data.append('title', formData.title);
@@ -38,24 +51,23 @@ const FundraiserForm = () => {
     Data.append('beneficiary', formData.beneficiary);
     Data.append('enddate', formData.enddate);
     Data.append('category', formData.category);
+    Data.append('accountNumber', formData.accountNumber);
+    Data.append('ifscCode', formData.ifscCode);
+    Data.append('upiId', formData.upiId);
 
     for (let i = 0; i < files.length; i++) {
       Data.append('image', files[i]);
     }
 
-    // console.log(Data);
-
-
     try {
       const response = await fetch('/api/fundraiser', {
         method: 'POST',
-        body:Data,
+        body: Data,
       });
 
       if (response.ok) {
         console.log('Fundraiser created successfully');
-        router.push('/');
-        // Optionally reset form or redirect to another page
+        // router.push('/');
       } else {
         console.error('Failed to create fundraiser');
       }
@@ -72,6 +84,7 @@ const FundraiserForm = () => {
       >
         <h2 className="text-2xl font-semibold text-blue-700 mb-6 text-center">Create a Fundraiser</h2>
 
+        {/* Title */}
         <div className="mb-4">
           <label className="block text-blue-700 font-bold mb-2" htmlFor="title">
             Title
@@ -87,6 +100,7 @@ const FundraiserForm = () => {
           />
         </div>
 
+        {/* Description */}
         <div className="mb-4">
           <label className="block text-blue-700 font-bold mb-2" htmlFor="description">
             Description
@@ -101,6 +115,7 @@ const FundraiserForm = () => {
           />
         </div>
 
+        {/* Goal Amount */}
         <div className="mb-4">
           <label className="block text-blue-700 font-bold mb-2" htmlFor="goal">
             Goal Amount
@@ -116,6 +131,7 @@ const FundraiserForm = () => {
           />
         </div>
 
+        {/* Image */}
         <div className="mb-4">
           <label className="block text-blue-700 font-bold mb-2" htmlFor="image">
             Image
@@ -126,12 +142,12 @@ const FundraiserForm = () => {
             type="file"
             name="image"
             multiple
-            value={formData.image}
-            onChange={handlefileChange}
+            onChange={handleFileChange}
             required
           />
         </div>
 
+        {/* Requisitee */}
         <div className="mb-4">
           <label className="block text-blue-700 font-bold mb-2" htmlFor="requisitee">
             Requisitee
@@ -147,6 +163,7 @@ const FundraiserForm = () => {
           />
         </div>
 
+        {/* Beneficiary */}
         <div className="mb-4">
           <label className="block text-blue-700 font-bold mb-2" htmlFor="beneficiary">
             Beneficiary
@@ -162,6 +179,7 @@ const FundraiserForm = () => {
           />
         </div>
 
+        {/* End Date */}
         <div className="mb-4">
           <label className="block text-blue-700 font-bold mb-2" htmlFor="enddate">
             End Date
@@ -177,6 +195,7 @@ const FundraiserForm = () => {
           />
         </div>
 
+        {/* Category */}
         <div className="mb-4">
           <label className="block text-blue-700 font-bold mb-2" htmlFor="category">
             Category
@@ -184,17 +203,79 @@ const FundraiserForm = () => {
           <select
             className="shadow appearance-none border rounded w-full py-2 px-3 text-blue-700 leading-tight focus:outline-none focus:shadow-outline"
             id="category"
-            type="text"
             name="category"
             value={formData.category}
             onChange={handleChange}
             required
           >
-              <option value="">Select a category</option>
-              <option value="Medical">Medical</option>
-              <option value="Calamity">Calamity</option>
-              <option value="Social Cause">Social Cause</option>
+            <option value="">Select a category</option>
+            <option value="Medical">Medical</option>
+            <option value="Calamity">Calamity</option>
+            <option value="Social Cause">Social Cause</option>
           </select>
+        </div>
+
+        {/* Bank Account Number */}
+        <div className="mb-4">
+          <label className="block text-blue-700 font-bold mb-2" htmlFor="accountNumber">
+            Bank Account Number
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-blue-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="accountNumber"
+            type="Number"
+            name="accountNumber"
+            value={formData.accountNumber}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        {/* IFSC Code */}
+        <div className="mb-4">
+          <label className="block text-blue-700 font-bold mb-2" htmlFor="ifscCode">
+            IFSC Code
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-blue-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="ifscCode"
+            type="text"
+            name="ifscCode"
+            value={formData.ifscCode}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        {/* UPI ID */}
+        <div className="mb-4">
+          <label className="block text-blue-700 font-bold mb-2" htmlFor="upiId">
+            UPI ID
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-blue-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="upiId"
+            type="text"
+            name="upiId"
+            value={formData.upiId}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        {/* Checkbox for agreeing to share bank account details */}
+        <div className="mb-4">
+          <label className="inline-flex items-center text-blue-700 font-bold">
+            <input
+              type="checkbox"
+              className="form-checkbox"
+              checked={agreeToShare}
+              onChange={handleCheckboxChange}
+            />
+            <span className="ml-2">
+              I agree to share my bank account details, and they will not be shared with anyone else.
+            </span>
+          </label>
         </div>
 
         <div className="flex items-center justify-between">

@@ -6,7 +6,12 @@ import dbConnect from "@/app/lib/db";
 export async function GET(req){
     // Connect to the database
     await dbConnect();
-    const title = await req.query;
+    const { searchParams } = new URL(req.url);
+
+    const paramValue = searchParams.get('title');
+
+    console.log(paramValue);
+
     const contributors = await getContributorController(title);
 
     return NextResponse.json(contributors);
@@ -16,15 +21,20 @@ export async function POST(req){
     // Connect to the database
     await dbConnect();
     try {
-        const reqbody = await req.json();
+        const reqbody = await req.formData();
+
+        console.log(reqbody);
+        
         const contributor = await createContributorController(reqbody);
 
         return NextResponse.json(contributor,{status:200})
 
     }  
 
-    catch (error) {
+    catch (err) {
         // Return an error response
-        return NextResponse.json({ error: error.message }, { status:500})
+
+        console.log(err);
+        return NextResponse.json({ error: err.message }, { status:500})
 }
 }

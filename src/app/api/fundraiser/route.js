@@ -1,4 +1,4 @@
-import { getFundraiserController,createFundraiserController } from "@/app/controllers/fundraiserController";
+import { getFundraiserController,createFundraiserController, updateAmountraised } from "@/app/controllers/fundraiserController";
 
 import { NextResponse } from "next/server";
 import dbConnect from "@/app/lib/db";
@@ -123,3 +123,32 @@ export async function POST(req){
 //     });
 //   });
 // }
+
+export async function PATCH(req) {
+    try {
+      // Parse the request body
+      const data = await req.json();
+  
+      // Dummy data (simulating an update)
+      const updatedData = {
+        id: data.id,
+        amount : data.amount
+      };
+  
+      const updateamount = await updateAmountraised(updatedData);
+
+    //   if(updateamount.status==200){
+        return NextResponse.json({status:200});
+    //   }
+
+
+    } catch (error) {
+      console.error("Error in PATCH request:", error);
+    return NextResponse.json({
+        error: error.message,
+        }, {
+        status:500,
+    })
+    }
+  }
+  

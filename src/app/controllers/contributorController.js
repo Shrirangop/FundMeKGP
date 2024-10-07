@@ -1,13 +1,23 @@
 import Contributormodel from "../models/Contributormodel";
 
+
+
+
 export async function createContributorController(req){
-    const {name, email, Phone, title, Amount } = req;
+
+    const name = req.get('name');
+    const Amount = req.get('Amount');
+    const title = req.get('title');
+    const beneficiary = req.get('beneficiary');
+    const receipt = req.get('receipt');
+    
+ 
     const newContributor = new Contributormodel({
         name,
-        email,
-        Phone,
+        Amount,
         title,
-        Amount
+        beneficiary,
+        receipt
     });
 
     console.log(name);
@@ -24,7 +34,7 @@ export async function createContributorController(req){
         
     
 }
-    catch{
+    catch(error){
         console.log(error);
         return {
             status: 500,

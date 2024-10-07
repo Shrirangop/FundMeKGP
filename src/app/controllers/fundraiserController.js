@@ -38,12 +38,17 @@ export async function createFundraiserController(req){
     const title = req.get('title');
     const description = req.get('description');
     const goal = req.get('goal');
-    const amountraised = req.get('amountraised');
+    // const amountraised = 0;
     const enddate = req.get('enddate');
     const images = req.getAll('image');
     const category = req.get('category');
     const requisitee = req.get('requisitee');
     const beneficiary = req.get('beneficiary');
+    const accountNumber = req.get('accountNumber');
+    const ifscCode = req.get('ifscCode');
+    const upiId = req.get('upiId');
+
+    console.log(accountNumber);
 
     // console.log(images);
 
@@ -61,12 +66,14 @@ export async function createFundraiserController(req){
         title,
         description,
         goal,
-        amountraised,
         enddate,
         image,
         category,
         requisitee,
-        beneficiary
+        beneficiary,
+        accountNumber,
+        ifscCode,
+        upiId
     });
 
 
@@ -105,6 +112,29 @@ export async function getFundraiserController(query){
         return {
             status: 200,
             json: fundraisers,
+        }
+    }
+    catch(error){
+        return {
+            status: 500,
+            json: {error: error.message},
+        }
+    }
+}
+
+export async function updateAmountraised(req){
+    const {id,amount} = req;
+
+    console.log(id,amount);
+    try{
+        const fundraiser = await Fundraisermodel.findById(id);
+
+        console.log(fundraiser.amountraised);
+        fundraiser.amountraised = fundraiser.amountraised + Number(amount);
+        await fundraiser.save();
+        return {
+            status: 200,
+            json: {message: "Amount raised updated successfully"},
         }
     }
     catch(error){
