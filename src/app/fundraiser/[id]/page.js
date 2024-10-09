@@ -34,6 +34,8 @@ const Fundraiser = () => {
         receipt: ''
     });
 
+    
+
     const getfundraiser = async () => {
         try {
             const response = await axios.get("/api/fundraiser", {
@@ -134,6 +136,8 @@ const Fundraiser = () => {
 
     };
 
+    const progress = Math.round((fundraiser.amountraised/fundraiser.goal)*100);
+
     return (
         <>
             <div className="w-full h-auto flex justify-center items-center bg-gray-50 py-12">
@@ -142,9 +146,9 @@ const Fundraiser = () => {
                     <div className="lg:w-7/12 bg-white p-8 shadow-lg rounded-lg">
                         <div className="w-full mb-6 flex justify-center items-center">
                             <Image
-                                src="/trial.jpg"
-                                width={500}
-                                height={500}
+                                src={fundraiser.image[0]}
+                                width={400}
+                                height={300}
                                 alt="Fundraiser Image"
                                 className="rounded-lg"
                             />
@@ -161,13 +165,13 @@ const Fundraiser = () => {
                         <div className="bg-blue-50 p-4 rounded-lg shadow-inner mb-6">
                             <div className="flex items-center justify-between">
                                 <Typography className="font-bold text-lg text-blue-900">
-                                    <FaRupeeSign className="inline mr-2" /> 87,000 {/*{fundraiser.amountraised}*/}
+                                    <FaRupeeSign className="inline mr-2" />  {fundraiser.amountraised}
                                 </Typography>
                                 <Typography className="text-gray-600">
-                                    out of <FaRupeeSign className="inline" /> 1,500,000 {/*{fundraiser.goal}*/}
+                                    out of <FaRupeeSign className="inline" />  {fundraiser.goal}
                                 </Typography>
                             </div>
-                            <LinearProgress variant="determinate" value={50} className="mt-2" />
+                            <LinearProgress variant="determinate" value={progress} className="mt-2" />
                         </div>
 
                         {/* Share Buttons */}
@@ -201,13 +205,35 @@ const Fundraiser = () => {
                         <div className="bg-white p-6 rounded-lg shadow-lg">
                             <h3 className="text-xl font-semibold mb-4 text-center text-blue-900">Bank Account Details</h3>
                             <div className="text-gray-700 space-y-2">
-                                <p><strong>Account Holder:</strong> John Doe   {/*{fundraiser.beneficiary}*/}</p>
-                                <p><strong>Account Number:</strong> 123456789 {/*{fundraiser.accountNumber}*/}</p>
+                                <p><strong>Account Holder:</strong>   {fundraiser.beneficiary}</p>
+                                <p><strong>Account Number:</strong>  {fundraiser.accountNumber}</p>
                                 {/*<p><strong>Bank:</strong> ABC Bank</p>*/}
-                                <p><strong>IFSC Code:</strong> ABCD0123456 {/*{fundraiser.ifscCode}*/}</p>
-                                <p><strong>UPI ID:</strong> johndoe@upi {/*{fundraiser.upiId}*/}</p>
+                                <p><strong>IFSC Code:</strong>  {fundraiser.ifscCode}</p>
+                                <p><strong>UPI ID:</strong>  {fundraiser.upiId}</p>
                             </div>
                         </div>
+
+                        <div className="flex flex-col md:flex-row gap-6">
+  <div className="flex-1 bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
+    <h3 className="text-xl font-semibold mb-4 text-center text-blue-900 uppercase tracking-wide">
+      Beneficiary
+    </h3>
+    <p className="text-lg font-medium text-center text-gray-700">
+      {fundraiser.beneficiary}
+    </p>
+  </div>
+
+  <div className="flex-1 bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
+    <h3 className="text-xl font-semibold mb-4 text-center text-blue-900 uppercase tracking-wide">
+      Requisitee
+    </h3>
+    <p className="text-lg font-medium text-center text-gray-700">
+      {fundraiser.requisitee}
+    </p>
+  </div>
+</div>
+
+
 
                         {/* Contributors List */}
                         <div className="bg-white p-6 rounded-lg shadow-lg">

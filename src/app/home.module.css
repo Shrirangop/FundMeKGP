@@ -1,0 +1,23 @@
+@media (min-width: 768px) {
+  .custom{
+    width:100%;
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    gap: 1.25em;
+    margin-top: 16px;
+}
+  
+}
+
+@media (max-width: 767px) {
+  .custom {
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(1,minmax(0,1fr));
+    gap:1.25em;
+    margin-top: 16px;
+    
+  }
+    
+}

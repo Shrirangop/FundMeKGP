@@ -77,7 +77,7 @@ const FundraiserForm = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-white mt-2 mb-2">
+    <div className="flex justify-center items-center min-h-screen bg-white  m-4">
       <form
         className="bg-white shadow-md rounded-lg p-8 w-full max-w-lg border-2 border-blue-700 animate-slide-in"
         onSubmit={handleSubmit}

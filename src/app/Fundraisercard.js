@@ -35,13 +35,15 @@ export default function Fundraisercard({fundraiser}) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
-        {/* <Image
-          component="img"
-          height={140}
-          width = {150}
-          // src={imgurl}
-          alt="fund"
-        /> */}
+      <Image
+  src={fundraiser.image[0]}
+  alt="fund"
+  width={300} 
+  height={300} 
+  className="object-fit rounded-lg h-60 max-w-full " 
+  sizes="(max-height: 250px) 100vw, 33vw"
+/>
+
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             To support {fundraiser.beneficiary}
@@ -54,7 +56,7 @@ export default function Fundraisercard({fundraiser}) {
           </Typography>
           
             <Typography variant="body2" color="text.secondary">
-                <div className='flex justify-left items-center mt-2 mb-2'><Typography className = "flex justify-center items-center mr-2 font-bold text-black text-lg"><FaRupeeSign /> {fundraiser.amountraised}</Typography> raised out of <FaRupeeSign className = "ml-2"/>{fundraiser.goal}</div>
+                <div className='flex justify-left items-center mt-2 mb-2'><Typography className = "flex justify-center items-center mr-4 font-bold text-black text-lg"><FaRupeeSign /> {fundraiser.amountraised}</Typography> raised out of <FaRupeeSign className = "ml-2"/>{fundraiser.goal}</div>
                 <LinearProgress variant="determinate" value={progress} />
             </Typography>
             <div className = "flex justify-center items-center w-full">

@@ -20,11 +20,11 @@ const Navbar = () => {
         <Image src="/FundMEKGP.png" alt="Milaap Logo" className="h-8" width = {50} height = {50}/>
       </div>
       <ul className="flex space-x-4 w-2/5">
-        <li><a href="/" className="bg-blue-700 text-white cursor-pointer h-full w-auto p-2">Home</a></li>
+        <li><Link href="/" className="bg-blue-700 text-white cursor-pointer h-full w-auto p-2">Home</Link></li>
         {/* <li><a href="/schemes" className="cursor-pointer">Schemes</a></li> */}
-        <li><a href="/about-us" className="cursor-pointer">About Us</a></li>
-        <li className="relative">
-          <button className="cursor-pointer">Donate</button>
+        <li><Link href="/about" className="cursor-pointer">About Us</Link></li>
+        <li>
+        <Link href="/donate" className="cursor-pointer">Donate</Link>
         </li>
       </ul>
       <div className="flex space-x-4 w-2/5 justify-end items-center">
