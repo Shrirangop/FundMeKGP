@@ -45,6 +45,8 @@ export async function createContributorController(req){
 
 export async function getContributorController(req){
     const title = req;
+
+    console.log(title);
     try{
         const contributors = await Contributormodel.find(
             {title: title}
@@ -54,7 +56,7 @@ export async function getContributorController(req){
             json: contributors,
         }
     }
-    catch{
+    catch(error){
         return {
             status: 500,
             json: {error: error.message},

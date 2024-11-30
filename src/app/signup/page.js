@@ -1,5 +1,6 @@
 "use client"
 import { useState } from "react";
+import Router from "next/router";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -29,6 +30,31 @@ const Signup = () => {
     }
     return isValid;
   };
+
+  const welcomeMail = async () => {
+    try {
+      const response = await fetch('/api/mailer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+        }),
+
+      });
+
+      if (response.ok) {
+        console.log('Welcome mail sent');
+      } else {
+        console.error('Failed to send welcome mail');
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -43,6 +69,8 @@ const Signup = () => {
 
       if (response.ok) {
         console.log('User registered succesfully');
+        welcomeMail();
+        Router.push('/signin');
         // Optionally reset form or redirect to another page
       } else {
         console.error('Failed to register');

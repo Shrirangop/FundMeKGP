@@ -34,7 +34,23 @@ const Fundraiser = () => {
         receipt: ''
     });
 
-    
+    const [contributors, setContributors] = useState([]);
+
+    const [image, setimage] = useState([]);
+
+
+    const getContributors = async (title) => {
+        try {
+            
+            const response = await axios.get(`/api/contributor?title=${title}`);
+            console.log(response.data.json);
+            setContributors(response.data.json);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
 
     const getfundraiser = async () => {
         try {
@@ -44,20 +60,27 @@ const Fundraiser = () => {
                 }
             })
             setFundraiser(response.data.json);
+            setimage(response.data.json.image);
+
+            getContributors(response.data.json.title);
         } catch (error) {
             console.log(error);
         }
     }
 
+
+
     useEffect(() => {
         getfundraiser();
+        // getContributors();
     }, [])
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-    
+
         setContributor({ ...contributor, [name]: value });
-       
+
     };
 
     function isValidURL(url) {
@@ -65,9 +88,9 @@ const Fundraiser = () => {
         return urlPattern.test(url);
     }
 
-    const updateAmountraised = async(amount)=>{
-        try{
-            const response = await fetch('/api/fundraiser',{
+    const updateAmountraised = async (amount) => {
+        try {
+            const response = await fetch('/api/fundraiser', {
                 method: 'PATCH',
                 body: JSON.stringify({
                     id: id,
@@ -78,18 +101,18 @@ const Fundraiser = () => {
                 }
             })
 
-            if(response.ok){
+            if (response.ok) {
                 console.log('Amount raised updated successfully');
             }
-            else{
+            else {
                 console.error('Failed to update amount raised');
             }
-            }
-            catch(error){
-                console.error('An error occurred:', error);
-            }
-               
         }
+        catch (error) {
+            console.error('An error occurred:', error);
+        }
+
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -108,35 +131,37 @@ const Fundraiser = () => {
             Data.append('name', contributor.name);
             Data.append('Amount', contributor.amount);
             Data.append('receipt', contributor.receipt);
-            Data.append('beneficiary',fundraiser.beneficiary);
-            Data.append('title',fundraiser.title);
+            Data.append('beneficiary', fundraiser.beneficiary);
+            Data.append('title', fundraiser.title);
 
             try {
                 const response = await fetch('/api/contributor', {
-                  method: 'POST',
-                  body: Data,
+                    method: 'POST',
+                    body: Data,
                 });
-          
+
                 if (response.ok) {
                     console.log('Contributor added successfully');
                     updateAmountraised(contributor.amount);
 
                 } else {
-                  console.error('Failed to create fundraiser');
+                    console.error('Failed to create fundraiser');
                 }
-              } catch (error) {
+            } catch (error) {
                 console.error('An error occurred:', error);
-              }
+            }
 
 
             alert("Form submitted successfully!");
-            
+
         }
 
 
     };
 
-    const progress = Math.round((fundraiser.amountraised/fundraiser.goal)*100);
+    const progress = Math.round((fundraiser.amountraised / fundraiser.goal) * 100);
+
+    // console.log(fundraiser);
 
     return (
         <>
@@ -144,24 +169,16 @@ const Fundraiser = () => {
                 <div className="w-11/12 max-w-7xl flex flex-col lg:flex-row gap-10">
                     {/* Left Section: Image and Description */}
                     <div className="lg:w-7/12 bg-white p-8 shadow-lg rounded-lg">
+
                         <div className="w-full mb-6 flex justify-center items-center">
                             <Image
-                                src={fundraiser.image[0]}
+                                src={image[0]}
                                 width={400}
                                 height={300}
                                 alt="Fundraiser Image"
                                 className="rounded-lg"
                             />
                         </div>
-                        <h1 className="font-bold text-4xl text-center text-blue-900 mb-6">
-                            {/* Help 12-year-old patient suffering from cancer */} {fundraiser.title}
-                        </h1>
-                        <h2 className="text-xl font-semibold mb-4">Description</h2>
-                        <p className="text-gray-700 mb-6">
-                            {/* Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio sapiente assumenda illum perspiciatis soluta, labore esse ratione libero possimus eligendi aut consectetur qui perferendis necessitatibus accusamus enim commodi doloremque ullam quaerat. */} {fundraiser.description}
-                        </p>
-
-                        {/* Progress Section */}
                         <div className="bg-blue-50 p-4 rounded-lg shadow-inner mb-6">
                             <div className="flex items-center justify-between">
                                 <Typography className="font-bold text-lg text-blue-900">
@@ -173,6 +190,13 @@ const Fundraiser = () => {
                             </div>
                             <LinearProgress variant="determinate" value={progress} className="mt-2" />
                         </div>
+                        <h1 className="font-bold text-4xl text-center text-blue-900 mb-6">
+                            {/* Help 12-year-old patient suffering from cancer */} {fundraiser.title}
+                        </h1>
+                        <h2 className="text-xl font-semibold mb-4">Description</h2>
+                        <p className="text-gray-700 mb-6">
+                            {/* Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio sapiente assumenda illum perspiciatis soluta, labore esse ratione libero possimus eligendi aut consectetur qui perferendis necessitatibus accusamus enim commodi doloremque ullam quaerat. */} {fundraiser.description}
+                        </p>
 
                         {/* Share Buttons */}
                         <div className="flex justify-between space-x-4">
@@ -214,24 +238,24 @@ const Fundraiser = () => {
                         </div>
 
                         <div className="flex flex-col md:flex-row gap-6">
-  <div className="flex-1 bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
-    <h3 className="text-xl font-semibold mb-4 text-center text-blue-900 uppercase tracking-wide">
-      Beneficiary
-    </h3>
-    <p className="text-lg font-medium text-center text-gray-700">
-      {fundraiser.beneficiary}
-    </p>
-  </div>
+                            <div className="flex-1 bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
+                                <h3 className="text-xl font-semibold mb-4 text-center text-blue-900 uppercase tracking-wide">
+                                    Beneficiary
+                                </h3>
+                                <p className="text-lg font-medium text-center text-gray-700">
+                                    {fundraiser.beneficiary}
+                                </p>
+                            </div>
 
-  <div className="flex-1 bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
-    <h3 className="text-xl font-semibold mb-4 text-center text-blue-900 uppercase tracking-wide">
-      Requisitee
-    </h3>
-    <p className="text-lg font-medium text-center text-gray-700">
-      {fundraiser.requisitee}
-    </p>
-  </div>
-</div>
+                            <div className="flex-1 bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
+                                <h3 className="text-xl font-semibold mb-4 text-center text-blue-900 uppercase tracking-wide">
+                                    Requisitee
+                                </h3>
+                                <p className="text-lg font-medium text-center text-gray-700">
+                                    {fundraiser.requisitee}
+                                </p>
+                            </div>
+                        </div>
 
 
 
@@ -239,9 +263,9 @@ const Fundraiser = () => {
                         <div className="bg-white p-6 rounded-lg shadow-lg">
                             <h3 className="text-xl font-semibold mb-4 text-center text-blue-900">Contributors</h3>
                             <div className="space-y-2">
-                                <Contributor name="Manish Paul" />
-                                <Contributor name="Jane Doe" />
-                                <Contributor name="John Smith" />
+                                {contributors.map((contributor, index) => (
+                                    <Contributor key={index} name={contributor.name}  />
+                                ))}
                             </div>
                         </div>
 
@@ -258,7 +282,7 @@ const Fundraiser = () => {
                         {showForm && (
                             <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg space-y-4">
                                 <h3 className="text-xl font-semibold mb-4 text-center text-blue-900">Contributor Details</h3>
-                                
+
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700">Contributor Name</label>
                                     <input

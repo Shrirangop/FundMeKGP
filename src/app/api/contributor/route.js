@@ -12,7 +12,7 @@ export async function GET(req){
 
     console.log(paramValue);
 
-    const contributors = await getContributorController(title);
+    const contributors = await getContributorController(paramValue);
 
     return NextResponse.json(contributors);
 }

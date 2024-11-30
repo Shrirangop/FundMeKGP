@@ -14,7 +14,7 @@ export default function Donate() {
   const [filteredData, setFilteredData] = useState([]);
   const [category, setCategory] = useState("all");
   const [currentPage, setCurrentPage] = useState(0);
-  const fundraisersPerPage = 6; // Number of fundraisers per page
+  const fundraisersPerPage = 3; // Number of fundraisers per page
 
   const getfundraisers = async () => {
     try {
@@ -43,9 +43,14 @@ export default function Donate() {
   }, [category, data]);
 
   // Handle page change
-  const handlePageClick = (selected) => {
-    setCurrentPage(selected.selected);
+  const handlePageClick = (selected,value) => {
+    console.log(value);
+    setCurrentPage(value -1);
   };
+
+  // Calculate number of pages
+  const count = Math.ceil(data.length /fundraisersPerPage );
+
 
   // Slice data for current page
   const offset = currentPage * fundraisersPerPage;
@@ -54,7 +59,7 @@ export default function Donate() {
   return (
     <>
       <div className="w-full flex flex-col justify-center items-center">
-        {/* Search Bar */}
+        {/* Search Bar
         <div className="w-4/5 h-auto mt-8 flex justify-center items-center">
           <TextField
             fullWidth
@@ -65,10 +70,10 @@ export default function Donate() {
           <div className="">
             <CiSearch size={50} color={"blue"} className="cursor-pointer" />
           </div>
-        </div>
+        </div> */}
 
         {/* Filter Section */}
-        <div className="w-4/5 h-auto flex justify-center items-center">
+        {/* <div className="w-4/5 h-auto flex justify-center items-center">
           <div
             className="card rounded-md shadow-md shadow-blue-300 w-1/5 h-auto flex flex-col justify-center items-center p-2 m-4 cursor-pointer"
             onClick={() => setCategory("medical")}
@@ -92,10 +97,10 @@ export default function Donate() {
             <BiSolidDonateHeart size={60} color={"blue"} />
             <h2 className="text-blue-500 mt-2">Social Cause</h2>
           </div>
-        </div>
+        </div> */}
 
         {/* Fundraisers List */}
-        <div className="grid grid-flow-row grid-cols-3 w-4/5 mt-8 mb-8 gap-5">
+        <div className="grid grid-flow-row sm:grid-cols-3 grid-cols-1 w-4/5 mt-8 mb-8 gap-5">
           {currentData.length > 0 ? (
             currentData.map((fundraiser, index) => (
               <div className="flex justify-center items-center" key={index}>
@@ -108,7 +113,7 @@ export default function Donate() {
         </div>
 
         {/* Pagination */}
-        <Pagination count={11} defaultPage={1} siblingCount={0} />
+        <Pagination count={count} defaultPage={1} siblingCount={0}  onChange={handlePageClick}/>
         
       </div>
     </>

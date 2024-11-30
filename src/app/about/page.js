@@ -2,6 +2,7 @@
 "use client"
 // pages/about.js
 import Image from 'next/image';
+import { FaLinkedin } from "react-icons/fa";
 
 const AboutUs = () => {
   return (
@@ -107,38 +108,38 @@ const AboutUs = () => {
           {/* Team Member 1 */}
           <div className="bg-white rounded-lg shadow-lg overflow-hidden p-6 border border-blue-200">
             <div className="w-48 h-60 mx-auto  overflow-hidden mb-4">
-              <Image src="/shrirang.jpg" alt="R S Thiruvignesh" width={192} height={240} />
+              <Image src="/shrirang.jpg" alt="Shrirang Elkunchwar" width={192} height={240} />
             </div>
-            <h2 className="text-xl font-semibold text-blue-700 text-center">R S Thiruvignesh (Founder)</h2>
-            <p className="text-center text-gray-600">Final Year B.Tech - 2024</p>
-            <div className="text-center mt-4">
+            <h2 className="text-xl font-semibold text-blue-700 text-center">Shrirang Elkunchwar</h2>
+            <p className="text-center text-gray-600">Tech Lead</p>
+            {/* <div className="text-center mt-4">
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/shrirang-elkunchwar-b17171250/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-700 hover:text-blue-900"
               >
-                LinkedIn
+             <FaLinkedin />
               </a>
-            </div>
+            </div> */}
           </div>
 
           {/* Team Member 2 */}
           <div className="bg-white rounded-lg shadow-lg overflow-hidden p-6 border border-blue-200">
             <div className="w-48 h-60 mx-auto  overflow-hidden mb-4">
-              <Image src="/shrirang.jpg" alt="Shrirang Elkunchwar" width={192} height={240} />
+              <Image src="/tiru.jpg" alt="Thiruvignesh" width={192} height={240} />
             </div>
-            <h2 className="text-xl font-semibold text-blue-700 text-center">Shrirang Elkunchwar</h2>
-            <p className="text-center text-gray-600">XX</p>
+            <h2 className="text-xl font-semibold text-blue-700 text-center">R S Thiruvignesh </h2>
+            <p className="text-center text-gray-600">Founder</p>
           </div>
 
           {/* Team Member 3 */}
           <div className="bg-white rounded-lg shadow-lg overflow-hidden p-6 border border-blue-200">
             <div className="w-48 h-60 mx-auto overflow-hidden mb-4">
-              <Image src="/shrirang.jpg" alt="Rohit Bhalerao" width={192} height={240} />
+              <Image src="/rohan.jpg" alt="Rohit Bhalerao" width={192} height={240} />
             </div>
             <h2 className="text-xl font-semibold text-blue-700 text-center">Rohit Bhalerao</h2>
-            <p className="text-center text-gray-600">XX</p>
+            <p className="text-center text-gray-600">Public Relations Lead</p>
           </div>
         </div>
       </section>
